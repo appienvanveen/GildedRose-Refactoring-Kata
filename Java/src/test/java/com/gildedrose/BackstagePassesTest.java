@@ -1,44 +1,45 @@
 package com.gildedrose;
 
+import com.gildedrose.determiners.BackstagePassesQualityDeterminer;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BackstagePassesTest {
 
+    private BackstagePassesQualityDeterminer determiner = new BackstagePassesQualityDeterminer();
+
     @Test
-    void testBrieIncreasesInQuality(){
-        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 100, 2) };
-        GildedRose app = new GildedRose(items);
+    void testBrieIncreasesInQuality() {
+        GildedRose app = new GildedRose(Collections.singletonList(new Item("Backstage passes to a TAFKAL80ETC concert", 100, 2, false)), determiner);
         app.updateQuality();
-        assertEquals(3, app.items[0].quality);
-        assertEquals(99, app.items[0].sellIn);
+        assertEquals(3, app.getItems().get(0).getQuality());
+        assertEquals(99, app.getItems().get(0).getSellIn());
     }
 
     @Test
-    void testBrieIncreasesQuickerBy10orLessSellIn(){
-        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20) };
-        GildedRose app = new GildedRose(items);
+    void testBrieIncreasesQuickerBy10orLessSellIn() {
+        GildedRose app = new GildedRose(Collections.singletonList(new Item("Backstage passes to a TAFKAL80ETC concert", 10, 20, false)), determiner);
         app.updateQuality();
-        assertEquals(22, app.items[0].quality);
-        assertEquals(9, app.items[0].sellIn);
+        assertEquals(22, app.getItems().get(0).getQuality());
+        assertEquals(9, app.getItems().get(0).getSellIn());
     }
 
     @Test
-    void testBrieIncreasesQuickerBy5orLessSellIn(){
-        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20) };
-        GildedRose app = new GildedRose(items);
+    void testBrieIncreasesQuickerBy5orLessSellIn() {
+        GildedRose app = new GildedRose(Collections.singletonList(new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20, false)), determiner);
         app.updateQuality();
-        assertEquals(23, app.items[0].quality);
-        assertEquals(4, app.items[0].sellIn);
+        assertEquals(23, app.getItems().get(0).getQuality());
+        assertEquals(4, app.getItems().get(0).getSellIn());
     }
 
     @Test
-    void testQualityDropsWhenAfterSellIn(){
-        Item[] items = new Item[] { new Item("Backstage passes to a TAFKAL80ETC concert", -1, 20) };
-        GildedRose app = new GildedRose(items);
+    void testQualityDropsWhenAfterSellIn() {
+        GildedRose app = new GildedRose(Collections.singletonList(new Item("Backstage passes to a TAFKAL80ETC concert", -1, 20, false)), determiner);
         app.updateQuality();
-        assertEquals(0, app.items[0].quality);
-        assertEquals(-2, app.items[0].sellIn);
+        assertEquals(0, app.getItems().get(0).getQuality());
+        assertEquals(-2, app.getItems().get(0).getSellIn());
     }
 }

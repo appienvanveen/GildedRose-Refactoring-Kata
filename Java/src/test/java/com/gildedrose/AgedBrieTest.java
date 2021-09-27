@@ -1,25 +1,34 @@
 package com.gildedrose;
 
+import com.gildedrose.determiners.AgedBrieQualityDeterminer;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Collections;
+
+import static com.gildedrose.ProductConstants.AGED_BRIE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AgedBrieTest {
 
+    private AgedBrieQualityDeterminer determiner = new AgedBrieQualityDeterminer();
+
     @Test
-    void testBrieIncreasInQuality(){
-        Item[] items = new Item[] { new Item("Aged Brie", 2, 2) };
-        GildedRose app = new GildedRose(items);
+    void testBrieIncreasInQuality() {
+        Item item = new Item(AGED_BRIE, 2, 2, false);
+
+        GildedRose app = new GildedRose(Collections.singletonList(item), determiner);
         app.updateQuality();
-        assertEquals(3, app.items[0].quality);
-        assertEquals(1, app.items[0].sellIn);
+
+        assertEquals(3, app.getItems().get(0).getQuality());
+        assertEquals(1, app.getItems().get(0).getSellIn());
     }
 
     @Test
-    void testQualityNeverHigherThan50(){
-        Item[] items = new Item[] { new Item("Aged Brie", 0, 50) };
-        GildedRose app = new GildedRose(items);
+    void testQualityNeverHigherThan50() {
+        GildedRose app = new GildedRose(Collections.singletonList(new Item(AGED_BRIE, 0, 50, false)), determiner);
         app.updateQuality();
-        assertEquals(50, app.items[0].quality);
+        assertEquals(50, app.getItems().get(0).getQuality());
     }
+
 }
