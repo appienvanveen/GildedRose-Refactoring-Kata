@@ -1,16 +1,12 @@
 package com.gildedrose;
 
-import com.gildedrose.determiners.AgedBrieQualityDeterminer;
-import com.gildedrose.determiners.BackstagePassesQualityDeterminer;
-import com.gildedrose.determiners.DefaultItemQualityDeterminer;
-import com.gildedrose.determiners.SulfurasQualityDeterminer;
+import com.gildedrose.determiners.*;
 
 import java.util.Arrays;
 
 public class TexttestFixture {
     public static void main(String[] args) {
         System.out.println("OMGHAI!");
-
 
         Item[] items = new Item[]{
 
@@ -25,7 +21,8 @@ public class TexttestFixture {
             // this conjured item does not work properly yet
             new Item("Conjured Mana Cake", 3, 6, false)};
 
-        GildedRose app = new GildedRose(Arrays.asList(items), new DefaultItemQualityDeterminer(), new BackstagePassesQualityDeterminer(), new AgedBrieQualityDeterminer(), new SulfurasQualityDeterminer());
+
+        GildedRose app = new GildedRose(Arrays.asList(items), new DefaultItemQualityDeterminer(), getQualityDeterminers());
 
         int days = 2;
         if (args.length > 0) {
@@ -41,6 +38,15 @@ public class TexttestFixture {
             System.out.println();
             app.updateQuality();
         }
+    }
+
+    private static QualityDeterminer[] getQualityDeterminers() {
+        return new QualityDeterminer[]{
+            new BackstagePassesQualityDeterminer(),
+            new AgedBrieQualityDeterminer(),
+            new SulfurasQualityDeterminer(),
+            new ConjuredQualityDeterminer()
+        };
     }
 
 }

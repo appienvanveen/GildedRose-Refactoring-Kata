@@ -3,9 +3,9 @@ package com.gildedrose;
 public class Item {
 
     /*
-    Max quality for non_legenda
+    Max quality for non legendary items
      */
-    private static final int MAX_QUALITY = 50;
+    private static final int MAX_QUALITY_NON_LEGANDARY_ITEMS = 50;
 
     private final String name;
     private final int sellIn;
@@ -16,18 +16,7 @@ public class Item {
         this.name = name;
         this.sellIn = sellIn;
         this.isLegendary = isLegendary;
-        if (this.isLegendary) {
-            this.quality = quality;
-        } else {
-            if (quality < 0) {
-                this.quality = 0;
-            } else if (quality > 50) {
-                this.quality = MAX_QUALITY;
-            }
-            else{
-                this.quality = quality;
-            }
-        }
+        this.quality = determineQuality(quality);
     }
 
     @Override
@@ -49,6 +38,17 @@ public class Item {
 
     public boolean isLegendary() {
         return isLegendary;
+    }
+
+    private int determineQuality(int quality) {
+        if (!this.isLegendary) {
+            if (quality < 0) {
+                return 0;
+            } else if (quality > 50) {
+                return MAX_QUALITY_NON_LEGANDARY_ITEMS;
+            }
+        }
+        return quality;
     }
 
 }
