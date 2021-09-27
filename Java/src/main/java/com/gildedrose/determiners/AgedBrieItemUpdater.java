@@ -1,11 +1,14 @@
 package com.gildedrose.determiners;
 
 import com.gildedrose.Item;
-import com.gildedrose.QualityDeterminer;
+import com.gildedrose.ItemUpdater;
 
 import static com.gildedrose.ProductConstants.AGED_BRIE;
 
-public class AgedBrieQualityDeterminer implements QualityDeterminer {
+/**
+ * "Aged Brie" actually increases in Quality the older it gets
+ */
+public class AgedBrieItemUpdater implements ItemUpdater {
 
     @Override
     public boolean matches(Item item) {
@@ -13,13 +16,13 @@ public class AgedBrieQualityDeterminer implements QualityDeterminer {
     }
 
     @Override
-    public int getQualityDegrade(Item item) {
+    public int getQualityStep(Item item) {
         return 1;
     }
 
     @Override
     public int getCalculatedQuality(Item item) {
-        return item.getQuality() + (this.getQualityDegrade(item) * this.getDegradePace(item));
+        return item.getQuality() + (this.getQualityStep(item) * this.getDegradePace(item));
     }
 
 }

@@ -40,11 +40,18 @@ public class Item {
         return isLegendary;
     }
 
+    /**
+     * The Quality of an item is never more than 50
+     * The Quality of an item is never negative
+     *
+     * @param quality
+     * @return the quality
+     */
     private int determineQuality(int quality) {
         if (!this.isLegendary) {
             if (quality < 0) {
                 return 0;
-            } else if (quality > 50) {
+            } else if (quality > MAX_QUALITY_NON_LEGANDARY_ITEMS) {
                 return MAX_QUALITY_NON_LEGANDARY_ITEMS;
             }
         }

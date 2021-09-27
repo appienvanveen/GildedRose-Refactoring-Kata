@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 
 class GildedRose {
     private List<Item> items;
-    private final List<QualityDeterminer> determiners;
-    private final QualityDeterminer defaultDeterminer;
+    private final List<ItemUpdater> determiners;
+    private final ItemUpdater defaultDeterminer;
 
-    public GildedRose(List<Item> items, QualityDeterminer defaultDeterminer, QualityDeterminer... determiners) {
+    public GildedRose(List<Item> items, ItemUpdater defaultDeterminer, ItemUpdater... determiners) {
         this.items = items;
         this.defaultDeterminer = defaultDeterminer;
         this.determiners = Collections.unmodifiableList(Arrays.asList(determiners));
@@ -19,10 +19,10 @@ class GildedRose {
 
     public void updateQuality() {
         items = items.stream().map(it -> {
-            QualityDeterminer determiner = findDeterminer(it).orElse(this.defaultDeterminer);
+            ItemUpdater determiner = findDeterminer(it).orElse(this.defaultDeterminer);
             int newQuality = determiner.getCalculatedQuality(it);
-            int newSellin = determiner.updateSellIn(it);
-            return new Item(it.getName(), newSellin, newQuality, it.isLegendary());
+            int newSellIn = determiner.getCalculatedSellIn(it);
+            return new Item(it.getName(), newSellIn, newQuality, it.isLegendary());
         }).collect(Collectors.toList());
     }
 
@@ -30,7 +30,7 @@ class GildedRose {
         return Collections.unmodifiableList(this.items);
     }
 
-    private Optional<QualityDeterminer> findDeterminer(Item item) {
+    private Optional<ItemUpdater> findDeterminer(Item item) {
         return determiners.stream().filter(it -> it.matches(item)).findFirst();
     }
 }

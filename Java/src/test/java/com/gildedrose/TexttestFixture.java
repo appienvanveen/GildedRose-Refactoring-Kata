@@ -18,11 +18,10 @@ public class TexttestFixture {
             new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20, false),
             new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49, false),
             new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49, false),
-            // this conjured item does not work properly yet
             new Item("Conjured Mana Cake", 3, 6, false)};
 
 
-        GildedRose app = new GildedRose(Arrays.asList(items), new DefaultItemQualityDeterminer(), getQualityDeterminers());
+        GildedRose app = new GildedRose(Arrays.asList(items), new DefaultItemItemUpdater(), getQualityDeterminers());
 
         int days = 2;
         if (args.length > 0) {
@@ -40,12 +39,12 @@ public class TexttestFixture {
         }
     }
 
-    private static QualityDeterminer[] getQualityDeterminers() {
-        return new QualityDeterminer[]{
-            new BackstagePassesQualityDeterminer(),
-            new AgedBrieQualityDeterminer(),
-            new SulfurasQualityDeterminer(),
-            new ConjuredQualityDeterminer()
+    private static ItemUpdater[] getQualityDeterminers() {
+        return new ItemUpdater[]{
+            new BackstagePassesItemUpdater(),
+            new AgedBrieItemUpdater(),
+            new SulfurasItemUpdater(),
+            new ConjuredItemUpdater()
         };
     }
 

@@ -1,11 +1,14 @@
 package com.gildedrose.determiners;
 
 import com.gildedrose.Item;
-import com.gildedrose.QualityDeterminer;
+import com.gildedrose.ItemUpdater;
 
 import static com.gildedrose.ProductConstants.SULFURAS;
 
-public class SulfurasQualityDeterminer implements QualityDeterminer {
+/**
+ * "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
+ */
+public class SulfurasItemUpdater implements ItemUpdater {
 
     @Override
     public boolean matches(Item item) {
@@ -13,7 +16,7 @@ public class SulfurasQualityDeterminer implements QualityDeterminer {
     }
 
     @Override
-    public int getQualityDegrade(Item item) {
+    public int getQualityStep(Item item) {
         return 0;
     }
 
@@ -23,7 +26,7 @@ public class SulfurasQualityDeterminer implements QualityDeterminer {
     }
 
     @Override
-    public int updateSellIn(Item item) {
+    public int getCalculatedSellIn(Item item) {
         return item.getSellIn();
     }
 

@@ -1,9 +1,9 @@
 package com.gildedrose.determiners;
 
 import com.gildedrose.Item;
-import com.gildedrose.QualityDeterminer;
+import com.gildedrose.ItemUpdater;
 
-public class DefaultItemQualityDeterminer implements QualityDeterminer {
+public class DefaultItemItemUpdater implements ItemUpdater {
 
     @Override
     public boolean matches(Item item) {
@@ -11,13 +11,13 @@ public class DefaultItemQualityDeterminer implements QualityDeterminer {
     }
 
     @Override
-    public int getQualityDegrade(Item item) {
+    public int getQualityStep(Item item) {
         return 1;
     }
 
     @Override
     public int getCalculatedQuality(Item item) {
-        return item.getQuality() - (this.getQualityDegrade(item) * this.getDegradePace(item));
+        return item.getQuality() - (this.getQualityStep(item) * this.getDegradePace(item));
     }
 
 }
